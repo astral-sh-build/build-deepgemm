@@ -1,0 +1,17 @@
+diff --git a/setup.py b/setup.py
+index dc81c61..01ac388 100644
+--- a/setup.py
++++ b/setup.py
+@@ -3,8 +3,12 @@ from pathlib import Path
+ 
+ from setuptools import find_packages, setup
+ 
++# See: https://github.com/Dao-AILab/flash-attention/blob/0e79d71175346c7151f49ab6287084a052bc9613/setup.py#L196
++force_cxx11_abi = os.getenv("GROUPED_GEMM_FORCE_CXX11_ABI", "FALSE") == "TRUE"
++
+ try:
+     import torch
++    torch._C._GLIBCXX_USE_CXX11_ABI = force_cxx11_abi
+     from torch.utils.cpp_extension import BuildExtension, CUDAExtension
+ except ModuleNotFoundError as e:
+     raise ModuleNotFoundError("No module named 'torch'. `torch` is required to install `grouped_gemm`.",) from e
