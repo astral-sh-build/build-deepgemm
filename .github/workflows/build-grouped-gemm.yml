@@ -24,7 +24,7 @@ concurrency:
 jobs:
   build_wheels:
     name: Build Wheel
-    runs-on: gpu
+    runs-on: depot-ubuntu-latest-64
     env:
       GROUPED_GEMM_VERSION: ${{ github.event_name == 'release' && github.ref_name || (github.event_name == 'workflow_dispatch' && inputs.GROUPED_GEMM_VERSION || 'v0.3.0') }}
 
@@ -118,7 +118,6 @@ jobs:
             GROUPED_GEMM_FORCE_CXX11_ABI=${{ matrix.cxx11_abi }}
           CIBW_SKIP: "*musllinux*"
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: "auditwheel repair -w /tmp/cibuildwheel/repaired_wheel {wheel} --exclude libcuda.so --exclude libcuda.so.1 --exclude libc10.so --exclude libc10_cuda.so --exclude libtorch.so --exclude libtorch_python.so --exclude libtorch_cpu.so --exclude libtorch_cuda.so --exclude libtorch_cuda_cpp.so --exclude libtorch_cuda_cu.so --exclude libcudart.so.11 --exclude libcudart.so.12 --exclude libcudart.so.11.0 --exclude libcudart.so.12.0 --exclude libcurand.so.10 --exclude libcufile_rdma.so --exclude libcufile_rdma.so.1 --exclude libcufile.so.1 --exclude libcufile.so.0 --exclude libcufile.so"
-          CIBW_CONTAINER_ENGINE: "docker; create_args: --gpus all"
           CIBW_BUILD_FRONTEND: "pip; args: --no-build-isolation"
 
       - name: Log Built Wheels
