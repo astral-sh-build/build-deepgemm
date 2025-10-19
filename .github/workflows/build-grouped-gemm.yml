@@ -44,8 +44,6 @@ jobs:
     name: Build Wheel
     needs: [plan-matrix]
     runs-on: ${{ matrix.RUNNER }}
-    env:
-      GROUPED_GEMM_VERSION: ${{ github.event_name == 'release' && github.ref_name || (github.event_name == 'workflow_dispatch' && inputs.GROUPED_GEMM_VERSION || 'v0.3.0') }}
 
     permissions:
       contents: write
@@ -57,11 +55,33 @@ jobs:
         include: ${{ fromJSON(needs.plan-matrix.outputs.matrix) }}
 
     steps:
+      - name: Determine Grouped GEMM version
+        id: grouped-gemm-version
+        run: |
+          # Extract Grouped GEMM version from tag. Tags can be either:
+          # - v0.3.0 (legacy format; maps directly to Grouped GEMM version)
+          # - v0.3.0-r1 (new format; strip -rN suffix to get Grouped GEMM version)
+          if [ "${GITHUB_EVENT_NAME}" = "release" ]; then
+            TAG="${GITHUB_REF_NAME}"
+            # Remove -rN suffix if present
+            GROUPED_GEMM_VERSION="${TAG%-r*}"
+          elif [ "${GITHUB_EVENT_NAME}" = "workflow_dispatch" ]; then
+            GROUPED_GEMM_VERSION="${INPUTS_GROUPED_GEMM_VERSION}"
+          else
+            GROUPED_GEMM_VERSION="v0.3.0"
+          fi
+          echo "version=${GROUPED_GEMM_VERSION}" >> $GITHUB_OUTPUT
+          echo "Using Grouped GEMM version: ${GROUPED_GEMM_VERSION}"
+        env:
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
+          GITHUB_REF_NAME: ${{ github.ref_name }}
+          INPUTS_GROUPED_GEMM_VERSION: ${{ inputs.GROUPED_GEMM_VERSION }}
+
       - name: Checkout Grouped GEMM
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
           repository: tgale96/grouped_gemm
-          ref: ${{ env.GROUPED_GEMM_VERSION }}
+          ref: ${{ steps.grouped-gemm-version.outputs.version }}
           persist-credentials: false
           submodules: true
 
@@ -108,7 +128,7 @@ jobs:
             pip install setuptools wheel &&
             pip install typing-extensions==4.12.2 &&
             pip install --no-cache-dir torch==${{ matrix.torch-version }} --index-url https://download.pytorch.org/whl/cu${TORCH_CUDA_VERSION} &&
-            bash build_scripts/prepare_for_build.sh ${{ env.GROUPED_GEMM_VERSION }}
+            bash build_scripts/prepare_for_build.sh ${{ steps.grouped-gemm-version.outputs.version }}
           # TODO: `TORCH_CUDA_ARCH_LIST` should probably be in the matrix.
           CIBW_ENVIRONMENT: >
             PATH=$PATH:/root/.local/bin
