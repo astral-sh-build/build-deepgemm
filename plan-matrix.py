@@ -107,6 +107,9 @@ AUDITWHEEL_CUDA_VERSION_EXCLUDES = {
 
 # CXX11 ABI configuration for each PyTorch version
 TORCH_CXX11_ABI = {
+    "2.4": ["FALSE"],
+    "2.5": ["FALSE"],
+    "2.6": ["FALSE", "TRUE"],
     "2.7": ["TRUE"],
     "2.8": ["TRUE"],
     "2.9": ["TRUE"],

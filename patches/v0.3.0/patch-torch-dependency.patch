@@ -1,0 +1,21 @@
+diff --git a/setup.py b/setup.py
+index dc81c61..007f258 100644
+--- a/setup.py
++++ b/setup.py
+@@ -55,6 +55,10 @@ extra_deps['dev'] = [
+ 
+ extra_deps['all'] = set(dep for deps in extra_deps.values() for dep in deps)
+ 
++TORCH_MAJOR = int(torch.__version__.split(".")[0])
++TORCH_MINOR = int(torch.__version__.split(".")[1])
++install_requires = [f"torch=={TORCH_MAJOR}.{TORCH_MINOR}.*"]
++
+ setup(
+     name="grouped_gemm",
+     version="0.3.0",
+@@ -73,4 +77,5 @@ setup(
+     ext_modules=ext_modules,
+     cmdclass={"build_ext": BuildExtension},
+     extras_require=extra_deps,
++    install_requires=install_requires,
+ )
