@@ -216,9 +216,9 @@ def main() -> None:
 
         # RUNNER: the GitHub Actions runner to use.
         if row["target-arch"] == "x86_64":
-            row["RUNNER"] = "depot-ubuntu-24.04-16"
+            row["RUNNER"] = "depot-ubuntu-24.04"
         elif row["target-arch"] == "aarch64":
-            row["RUNNER"] = "depot-ubuntu-24.04-arm-16"
+            row["RUNNER"] = "depot-ubuntu-24.04-arm"
         else:
             raise ValueError(f"Unknown target arch: {row['target-arch']}")
 
