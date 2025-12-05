@@ -222,7 +222,7 @@ def main() -> None:
         else:
             raise ValueError(f"Unknown target arch: {row['target-arch']}")
 
-    print(json.dumps(rows[:1]))
+    print(json.dumps(rows))
 
 
 if __name__ == "__main__":
