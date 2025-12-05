@@ -1,0 +1,20 @@
+diff --git a/setup.py b/setup.py
+index 38e891c..cfead54 100644
+--- a/setup.py
++++ b/setup.py
+@@ -182,6 +182,9 @@ class CachedWheelsCommand(_bdist_wheel):
+             super().run()
+ 
+ 
++TORCH_VERSION = parse(torch.__version__)
++TORCH_MAJOR, TORCH_MINOR = TORCH_VERSION.major, TORCH_VERSION.minor
++
+ if __name__ == '__main__':
+     # noinspection PyTypeChecker
+     setuptools.setup(
+@@ -201,4 +204,5 @@ if __name__ == '__main__':
+             'build_py': CustomBuildPy,
+             'bdist_wheel': CachedWheelsCommand,
+         },
++        install_requires=[f"torch=={TORCH_MAJOR}.{TORCH_MINOR}.*"]
+     )
