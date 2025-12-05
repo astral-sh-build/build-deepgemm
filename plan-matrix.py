@@ -12,15 +12,10 @@ from packaging.version import Version
 # The minimum CUDA version to build against.
 MIN_CUDA_VERSION = "12.8"
 
-# CUDA architectures to build against for each PyTorch/CUDA version.
-TORCH_CUDA_ARCH_LIST = {
-    ("2.7", "12.8"): "9.0;10.0;12.0+PTX",
-    ("2.8", "12.8"): "9.0;10.0;12.0+PTX",
-    ("2.8", "12.9"): "9.0;10.0;12.0+PTX",
-    ("2.9", "12.8"): "9.0;10.0;12.0+PTX",
-    ("2.9", "12.9"): "9.0;10.0;12.0+PTX",
-    ("2.9", "13.0"): "9.0;10.0;11.0;12.0+PTX",
-}
+# CUDA architectures to build against. This only affects the C++ extension wrapper,
+# not the actual GEMM kernels (which are JIT compiled at runtime). Using the same
+# value as upstream DeepGEMM.
+TORCH_CUDA_ARCH_LIST = "7.0 7.2 7.5 8.0 8.6 8.7 9.0+PTX"
 
 # The architectures to build against.
 ARCH_TORCH_PAIRS = {
@@ -210,9 +205,7 @@ def main() -> None:
         )
 
         # TORCH_CUDA_ARCH_LIST: the CUDA architectures to build for.
-        row["TORCH_CUDA_ARCH_LIST"] = TORCH_CUDA_ARCH_LIST[
-            (row["MATRIX_TORCH_VERSION"], row["MANYLINUX_CUDA_VERSION"])
-        ]
+        row["TORCH_CUDA_ARCH_LIST"] = TORCH_CUDA_ARCH_LIST
 
         # RUNNER: the GitHub Actions runner to use.
         if row["target-arch"] == "x86_64":

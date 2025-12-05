@@ -147,6 +147,7 @@ jobs:
             MANYLINUX_CUDA_COMPAT_VERSION="${{ env.MANYLINUX_CUDA_COMPAT_VERSION }}"
             CI_AUDITWHEEL_EXCLUDES="${{ env.CI_AUDITWHEEL_EXCLUDES }}"
             TORCH_CUDA_ARCH_LIST=${{ env.TORCH_CUDA_ARCH_LIST }}
+            DG_JIT_USE_NVRTC="0"
             DG_FORCE_BUILD="1"
             DG_USE_LOCAL_VERSION="0"
             MAX_JOBS=8
