@@ -29,7 +29,7 @@ jobs:
     outputs:
       matrix: ${{ steps.generate-matrix.outputs.matrix }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
         with:
           persist-credentials: false
 
@@ -84,7 +84,7 @@ jobs:
           INPUTS_DEEPGEMM_VERSION: ${{ inputs.DEEPGEMM_VERSION }}
 
       - name: Checkout DeepGEMM
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
         with:
           repository: deepseek-ai/DeepGEMM
           ref: ${{ steps.deepgemm-version.outputs.version }}
@@ -92,7 +92,7 @@ jobs:
           persist-credentials: false
 
       - name: Checkout utils
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
         with:
           path: build_scripts
           persist-credentials: false
