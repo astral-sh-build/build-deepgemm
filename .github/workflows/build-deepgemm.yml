@@ -41,7 +41,7 @@ jobs:
         run: |
           echo "matrix=$(uv run --script plan-matrix.py)" >> $GITHUB_OUTPUT
         env:
-          LIMIT_MATRIX: ${{ github.event_name == 'pull_request' && '1' || '' }}
+          LIMIT_MATRIX: ${{ github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'full-build') && '1' || '0' }}
 
   build-wheels:
     name: Build Wheel
