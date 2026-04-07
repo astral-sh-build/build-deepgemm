@@ -20,8 +20,8 @@ TORCH_CUDA_ARCH_LIST = "7.0 7.2 7.5 8.0 8.6 8.7 9.0+PTX"
 
 # The architectures to build against.
 ARCH_TORCH_PAIRS = {
-    "x86_64": ["2.7.1", "2.8.0", "2.9.0", "2.10.0"],
-    "aarch64": ["2.7.1", "2.8.0", "2.9.0", "2.10.0"],
+    "x86_64": ["2.7.1", "2.8.0", "2.9.0", "2.10.0", "2.11.0"],
+    "aarch64": ["2.7.1", "2.8.0", "2.9.0", "2.10.0", "2.11.0"],
 }
 
 # Supported Python versions for each PyTorch version.
@@ -34,6 +34,7 @@ TORCH_PYTHON_SUPPORT = {
     "2.8": ["3.9", "3.10", "3.11", "3.12", "3.13"],
     "2.9": ["3.10", "3.11", "3.12", "3.13", "3.14"],
     "2.10": ["3.10", "3.11", "3.12", "3.13", "3.14"],
+    "2.11": ["3.10", "3.11", "3.12", "3.13", "3.14"],
 }
 
 # Minimum and maximum CUDA versions for each PyTorch version.
@@ -46,6 +47,7 @@ PYTORCH_CUDA_RANGES: dict[str, tuple[str, str]] = {
     "2.8": ("11.8", "12.9"),
     "2.9": ("12.6", "13.0"),
     "2.10": ("12.6", "13.0"),
+    "2.11": ("12.6", "13.0"),
 }
 
 # Actual CUDA versions to build against for each PyTorch version.
@@ -64,6 +66,8 @@ PYTORCH_CUDA_VERSIONS: dict[tuple[str, str], list[str]] = {
     ("2.9", "aarch64"): ["12.6", "12.8", "12.9", "13.0"],
     ("2.10", "x86_64"): ["12.6", "12.8", "12.9", "13.0"],
     ("2.10", "aarch64"): ["12.6", "12.8", "12.9", "13.0"],
+    ("2.11", "x86_64"): ["12.6", "12.8", "12.9", "13.0"],
+    ("2.11", "aarch64"): ["12.6", "12.8", "12.9", "13.0"],
 }
 
 # The glibc version to use for each PyTorch version, for manylinux builds.
@@ -76,6 +80,7 @@ TORCH_GLIBC_VERSION: dict[str, str] = {
     "2.8": "2_24",
     "2.9": "2_24",
     "2.10": "2_24",
+    "2.11": "2_24",
 }
 
 AUDITWHEEL_BLANKET_EXCLUDES = [
