@@ -10,11 +10,11 @@ version. Each wheel has a local version suffix that identifies the CUDA, PyTorch
 was built against, such as `deep-gemm==2.1.1+cu12.8torch2.10.0cxx11abiTRUE`, and requires the
 matching PyTorch release.
 
-Pre-built wheels are available on [Astral's GPU indexes](https://wheels.astralshosted.com/index.html).
+Pre-built wheels are available on [Astral's GPU indexes](https://wheels.astralhosted.com/index.html).
 For example, to install a CUDA 12.8 build:
 
 ```console
-$ uv add deep-gemm --index astral-cu128=https://wheels.astralshosted.com/simple/cu128/
+$ uv add deep-gemm --index astral-cu128=https://wheels.astralhosted.com/simple/cu128/
 ```
 
 This configures the index and uses it as the source for `deep-gemm`:
@@ -25,13 +25,13 @@ deep-gemm = { index = "astral-cu128" }
 
 [[tool.uv.index]]
 name = "astral-cu128"
-url = "https://wheels.astralshosted.com/simple/cu128/"
+url = "https://wheels.astralhosted.com/simple/cu128/"
 ```
 
 Or, with `uv pip`:
 
 ```console
-$ uv pip install --index https://wheels.astralshosted.com/simple/cu128/ deep-gemm
+$ uv pip install --index https://wheels.astralhosted.com/simple/cu128/ deep-gemm
 ```
 
 ## Supported versions
