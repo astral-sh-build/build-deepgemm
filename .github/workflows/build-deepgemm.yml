@@ -67,7 +67,7 @@ jobs:
           if [ "${GITHUB_EVENT_NAME}" = "workflow_dispatch" ]; then
             TAG="${INPUTS_RELEASE_TAG}"
             # Remove -rN suffix if present
-            DEEPGEMM_VERSION=$(printf '%s\\n' "${TAG}" | sed -E 's/-r[0-9]+$//')
+            DEEPGEMM_VERSION=$(sed -E 's/-r[0-9]+$//' <<<"${TAG}")
             # Map version tags to commit hashes if needed
             if [ "${DEEPGEMM_VERSION}" = "v2.2.0" ]; then
               DEEPGEMM_VERSION="v2.1.1.post3"
